@@ -24,7 +24,7 @@ class Fast2SMSUtility
         $variables_values = $otp;
         $flash = '0';
         $numbers = $numbers;
-        
+
         $url = 'https://www.fast2sms.com/dev/bulkV2';
         $queryString = http_build_query([
             'authorization' => $authorization,
@@ -33,17 +33,17 @@ class Fast2SMSUtility
             'flash' => $flash,
             'numbers' => $numbers,
         ]);
-        
+
         $curl = curl_init();
-        
+
         curl_setopt_array($curl, [
             CURLOPT_URL => $url . '?' . $queryString,
             CURLOPT_RETURNTRANSFER => true,
         ]);
-        
+
         $response = curl_exec($curl);
         curl_close($curl);
-        
+
         return $response;
     }
 }

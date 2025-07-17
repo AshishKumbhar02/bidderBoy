@@ -12,7 +12,7 @@ use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,CanResetPasswordTrait;
+    use HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait;
 
     /**
      * The attributes that are mass assignable.

@@ -9,5 +9,4 @@ class Auto_bid_user extends Model
 {
     use HasFactory;
     protected $table = 'auto_bid_user';
-
 }

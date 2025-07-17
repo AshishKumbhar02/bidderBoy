@@ -21,9 +21,9 @@ class ProductPriceUpdated
      */
     public function __construct($product)
     {
-        $this->product = $product; 
+        $this->product = $product;
     }
-    
+
 
     /**
      * Get the channels the event should broadcast on.

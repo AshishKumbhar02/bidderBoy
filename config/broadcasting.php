@@ -29,7 +29,7 @@ return [
     */
 
     'connections' => [
-        
+
         'reverb' => [
             'driver' => 'reverb',
             'key' => env('REVERB_APP_KEY'),
@@ -52,18 +52,18 @@ return [
             'app_id' => env('PUSHER_APP_ID'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
-                'host' => env('PUSHER_HOST') ?: 'api-'.env('PUSHER_APP_CLUSTER', 'mt1').'.pusher.com',
+                'host' => env('PUSHER_HOST') ?: 'api-' . env('PUSHER_APP_CLUSTER', 'mt1') . '.pusher.com',
                 'port' => env('PUSHER_PORT', 6001),
                 'scheme' => env('PUSHER_SCHEME', 'https'),
                 'encrypted' => true,
                 'useTLS' => env('PUSHER_SCHEME', 'https') === 'https',
-                  'host' => '127.0.0.1',
-                  'port' => 6001,
-                  'scheme' => 'https',
+                'host' => '127.0.0.1',
+                'port' => 6001,
+                'scheme' => 'https',
             ],
             'client_options' => [
-                  CURLOPT_SSL_VERIFYHOST => 0,
-                    CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
             ],
         ],

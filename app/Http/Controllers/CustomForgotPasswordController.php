@@ -24,7 +24,7 @@ class CustomForgotPasswordController extends Controller
         // return back()->withErrors(['email' => __($status)]);
         return     json_encode(['success' => false, 'message' => __($status)]);
     }
-    
+
     // Reset Password Using Token
     public function resetPassword(Request $request)
     {

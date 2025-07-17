@@ -19,7 +19,7 @@ use App\Models\Auto_bid_user;
 use Illuminate\Support\Facades\Http;
 use DateTime;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
 
 class BiddingController extends Controller

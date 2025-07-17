@@ -22,5 +22,5 @@ class Coupon extends Model
         'is_enabled',
     ];
 
-    public $timestamps = true; 
+    public $timestamps = true;
 }

@@ -19,11 +19,11 @@
                      <div class="theme-option pb-4">
                         <h6 class="fw-semibold fs-4 mb-1">Theme Option</h6>
                         <div class="d-flex align-items-center gap-3 my-3">
-                           <a href="javascript:void(0)" onclick="toggleTheme('{{url('public/assets/back/css/style.min.css')}}')" class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center gap-2 light-theme text-dark">
+                           <a href="javascript:void(0)" onclick="toggleTheme('{{ url('public/assets/back/css/style.min.css') }}')" class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center gap-2 light-theme text-dark">
                            <i class="ti ti-brightness-up fs-7 text-primary"></i>
                            <span class="text-dark">Light</span>
                            </a>
-                           <a href="javascript:void(0)" onclick="toggleTheme('{{url('public/assets/back/css/style-dark.min.css')}}')" class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center gap-2 dark-theme text-dark">
+                           <a href="javascript:void(0)" onclick="toggleTheme('{{ url('public/assets/back/css/style-dark.min.css') }}')" class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center gap-2 dark-theme text-dark">
                            <i class="ti ti-moon fs-7 "></i>
                            <span class="text-dark">Dark</span>
                            </a>
@@ -47,27 +47,27 @@
                         <div class="d-flex align-items-center gap-3 my-3">
                            <ul class="list-unstyled mb-0 d-flex gap-3 flex-wrap change-colors">
                               <li class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center justify-content-center">
-                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin1-bluetheme-primary active-theme " onclick="toggleTheme('{{url('public/assets/back/css/style.min.css')}}')" data-color="blue_theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">undefined<i class="ti ti-check text-white d-flex align-items-center justify-content-center fs-5"></i>
+                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin1-bluetheme-primary active-theme " onclick="toggleTheme('{{ url('public/assets/back/css/style.min.css') }}')" data-color="blue_theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="BLUE_THEME">undefined<i class="ti ti-check text-white d-flex align-items-center justify-content-center fs-5"></i>
                                  </a>
                               </li>
                               <li class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center justify-content-center">
-                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin2-aquatheme-primary " onclick="toggleTheme('{{url('public/assets/back/css/style-aqua.min.css')}}')" data-color="aqua_theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
+                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin2-aquatheme-primary " onclick="toggleTheme('{{ url('public/assets/back/css/style-aqua.min.css') }}')" data-color="aqua_theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="AQUA_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
                                  </a>
                               </li>
                               <li class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center justify-content-center">
-                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin3-purpletheme-primary" onclick="toggleTheme('{{url('public/assets/back/css/style-purple.min.css')}}')" data-color="purple_theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
+                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin3-purpletheme-primary" onclick="toggleTheme('{{ url('public/assets/back/css/style-purple.min.css') }}')" data-color="purple_theme" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="PURPLE_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
                                  </a>
                               </li>
                               <li class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center justify-content-center">
-                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin4-greentheme-primary" onclick="toggleTheme('{{url('public/assets/back/css/style-green.min.css')}}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
+                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin4-greentheme-primary" onclick="toggleTheme('{{ url('public/assets/back/css/style-green.min.css') }}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="GREEN_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
                                  </a>
                               </li>
                               <li class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center justify-content-center">
-                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin5-cyantheme-primary" onclick="toggleTheme('{{url('public/assets/back/css/style-cyan.min.css')}}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
+                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin5-cyantheme-primary" onclick="toggleTheme('{{ url('public/assets/back/css/style-cyan.min.css') }}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="CYAN_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
                                  </a>
                               </li>
                               <li class="rounded-2 p-9 customizer-box hover-img d-flex align-items-center justify-content-center">
-                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin6-orangetheme-primary" onclick="toggleTheme('{{url('public/assets/back/css/style-orange.min.css')}}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
+                                 <a href="javascript:void(0)" class="rounded-circle position-relative d-block customizer-bgcolor skin6-orangetheme-primary" onclick="toggleTheme('{{ url('public/assets/back/css/style-orange.min.css') }}')" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="ORANGE_THEME">undefined<i class="ti ti-check  text-white d-flex align-items-center justify-content-center fs-5"></i>
                                  </a>
                               </li>
                            </ul>

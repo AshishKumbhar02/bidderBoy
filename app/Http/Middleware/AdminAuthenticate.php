@@ -19,8 +19,8 @@ class AdminAuthenticate
     public function handle(Request $request, Closure $next)
     {
         $auth = Auth::guard('admins')->check();
-        if($auth) {
-            
+        if ($auth) {
+
             //current user
             //$user = Auth::guard('admins')->user();
             //view()->share('USER', $user);
@@ -30,11 +30,9 @@ class AdminAuthenticate
             //view()->share('SETTING', $setting);
 
             return $next($request);
-
-        }else {
+        } else {
 
             return redirect(route('admin.login'));
-
-        }      
+        }
     }
 }

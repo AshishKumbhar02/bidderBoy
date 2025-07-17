@@ -10,7 +10,7 @@ return [
     'dashboard' => [
         'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
     ],
-'debug' => env('LARAVEL_WEBSOCKETS_DEBUG', true),
+    'debug' => env('LARAVEL_WEBSOCKETS_DEBUG', true),
     /*
      * This package comes with multi tenancy out of the box. Here you can
      * configure the different apps that can use the webSockets server.
@@ -31,7 +31,7 @@ return [
             'capacity' => null,
             'enable_client_messages' => false,
             'enable_statistics' => true,
-             'encrypted' => true,
+            'encrypted' => true,
         ],
     ],
 

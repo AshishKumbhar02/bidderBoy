@@ -1,4 +1,4 @@
-<?php include 'header.php';?> <section class="inner_header">
+<?php include 'header.php'; ?> <section class="inner_header">
   <div class="container">
     <ul class="breadcrumb breadcrumb list-inline justify-content-center">
       <li>
@@ -14,18 +14,18 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
-      
-          <div class="border_boxex">
-              <h4>Win History</h4>
-              <div class="nofound">
-                  <i class="fa fa-list" aria-hidden="true"></i>
-                   <h5>Sorry, No Record Found.</h5>
-              </div>
+
+        <div class="border_boxex">
+          <h4>Win History</h4>
+          <div class="nofound">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            <h5>Sorry, No Record Found.</h5>
           </div>
-      
+        </div>
+
       </div>
-      
-      
+
+
     </div>
   </div>
-</section> <?php include 'footer.php';?>
+</section> <?php include 'footer.php'; ?>

@@ -13,12 +13,12 @@ class EmailUtility
                 ->subject($subject);
         });
     }
-    
+
     public static function sendTextEmail($recipient, $subject, $message)
     {
         Mail::raw($message, function ($m) use ($recipient, $subject) {
             $m->to($recipient)
-              ->subject($subject);
+                ->subject($subject);
         });
-    }    
+    }
 }

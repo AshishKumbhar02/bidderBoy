@@ -10,15 +10,16 @@ class OtpAttempt extends Model
     protected $fillable = ['mobile_number', 'attempts', 'last_attempt_at'];
 
     // Define any relationships or additional methods here
-    public static function checkAttempts($mobileNumber){
-    
+    public static function checkAttempts($mobileNumber)
+    {
+
         $otpAttempts = OtpAttempt::where('mobile_number', $mobileNumber)->first();
-    
+
         if ($otpAttempts) {
             if ($otpAttempts->attempts >= 3 && OtpAttempt::isWithin24Hours($otpAttempts->last_attempt_at)) {
                 return false;
             }
-    
+
             $otpAttempts->attempts++;
             $otpAttempts->last_attempt_at = now();
             $otpAttempts->save();
@@ -29,12 +30,12 @@ class OtpAttempt extends Model
                 'last_attempt_at' => now(),
             ]);
         }
-    
+
         return true;
     }
-    
+
     public static function isWithin24Hours($timestamp)
     {
         return now()->diffInHours($timestamp) < 24;
-    }    
+    }
 }

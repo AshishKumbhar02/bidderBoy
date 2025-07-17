@@ -20,12 +20,12 @@ class AdminGuest
     public function handle(Request $request, Closure $next)
     {
         $auth = Auth::guard('admins')->check();
-        if(!$auth) {
+        if (!$auth) {
             //admin settings
             //$setting = DB::table('settings')->first();
             //view()->share('SETTING', $setting);   
             return $next($request);
-        }else {
+        } else {
             return redirect(route('admin.dashboard'));
         }
     }

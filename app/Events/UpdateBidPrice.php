@@ -39,8 +39,8 @@ class UpdateBidPrice implements ShouldBroadcastNow
     {
         return [
             'timestamp' => now()->toDateTimeString(),
-            'price' => $this->product->amount_per_bid, 
-            'all' => $this->product, 
+            'price' => $this->product->amount_per_bid,
+            'all' => $this->product,
         ];
     }
 }

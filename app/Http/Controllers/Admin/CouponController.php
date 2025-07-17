@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Admin\Coupon; 
+use App\Models\Admin\Coupon;
 
 class CouponController extends Controller
 {
@@ -13,16 +15,15 @@ class CouponController extends Controller
         // get all bids pack and pass it to view
         $coupons = Coupon::all();
         return view('backend.coupons.index', ['coupons' => $coupons]);
-  
     }
-    
+
     public function create(Request $request)
     {
         // Validate the incoming request data
         $request->validate([
             'code' => 'required|unique:coupons',
-        ]);        
-        
+        ]);
+
         $coupon = new Coupon();
         $coupon->code = $request->input('code');
         $coupon->description = $request->input('description');
@@ -46,8 +47,8 @@ class CouponController extends Controller
     {
         //get package by id
         $coupon = Coupon::find($id);
-        
-       //return as json data
+
+        //return as json data
         return response()->json([
             'status' => 'success',
             'data' => $coupon
@@ -67,14 +68,14 @@ class CouponController extends Controller
             'editMaxUsage' => 'nullable|integer',
             'editIsEnabled' => 'required|boolean',
         ]);
-    
+
         // Find the coupon by ID
         $coupon = Coupon::find($id);
-    
+
         if (!$coupon) {
             return response()->json(['message' => 'Coupon not found'], 404);
         }
-    
+
         // Update the fields
         $coupon->code = $request->input('editCode');
         $coupon->description = $request->input('editDescription');
@@ -84,10 +85,10 @@ class CouponController extends Controller
         $coupon->valid_until = $request->input('editValidUntil');
         $coupon->max_usage = $request->input('editMaxUsage');
         $coupon->is_enabled = $request->input('editIsEnabled');
-    
+
         // Save the changes to the database
         $coupon->save();
-    
+
         // Return a JSON response with status and data
         return response()->json([
             'status' => 'success',
@@ -100,16 +101,10 @@ class CouponController extends Controller
     {
         // get package by id
         $coupon = Coupon::find($id);
-      
+
         if ($coupon) {
             $coupon->delete();
-        } 
+        }
         return redirect()->route('coupon.index')->with('success', 'Coupon deleted successfully');
-       
-
- 
     }
-
-    
-   
 }
