@@ -24,6 +24,7 @@ class LoginRegisterController extends Controller
      */
     public function __construct()
     {
+        // Only guests can access except for logout and dashboard
         $this->middleware('guest')->except([
             'logout',
             'dashboard'
@@ -32,11 +33,8 @@ class LoginRegisterController extends Controller
 
 
 
-
     /**
-     * Display a registration form.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the registration form.
      */
     public function register()
     {
@@ -44,23 +42,22 @@ class LoginRegisterController extends Controller
     }
 
     /**
-     * Store a new user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Handle user registration with OTP verification.
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'first_name'    => 'required|string|max:250',
-            'last_name'     => 'required|string|max:250',
-            'username'      => 'required|max:250|unique:users',
-            'email'         => 'required|email|max:250|unique:users',
-            'mobile_number' => 'required|string|unique:users',
-            'password'      => 'required|min:8'
-        ]);
-
+        // Step 1: Validate input and send OTPs
         if (session()->get('rstep') == 1) {
+
+            // Validate registration form
+            $request->validate([
+                'first_name'    => 'required|string|max:250',
+                'last_name'     => 'required|string|max:250',
+                'username'      => 'required|max:250|unique:users',
+                'email'         => 'required|email|max:250|unique:users',
+                'mobile_number' => 'required|string|unique:users',
+                'password'      => 'required|min:8'
+            ]);
             $mobileNumber = str_replace(' ', '', $request->mobile_number);
             $attempts = OtpAttempt::checkAttempts($mobileNumber);
 
@@ -68,15 +65,11 @@ class LoginRegisterController extends Controller
                 return json_encode(['success' => false, 'rstep' => 1, 'message' => 'Maximum OTP attempts exceeded']);
             }
 
-            //send sms otp
-
-            // Default OTP
-            // $smsOtp = 1234;
-            // $emailOtp = 123456;
-
+            // Generate OTPs
             $smsOtp = rand(111111, 999999);
             $emailOtp = rand(111111, 999999);
 
+            // Store OTPs in session
             session()->put('r_sms_otp', $smsOtp);
             session()->put('r_email_otp', $emailOtp);
 
@@ -89,11 +82,10 @@ class LoginRegisterController extends Controller
                 }
             }
 
-            // send email otp
-            // $emailOtp = rand(111111, 999999);
+            // Send email OTP
             EmailUtility::sendTextEmail($request->email, 'Bidder Boy Registration OTP', "Your OTP for regitration is $emailOtp");
 
-            //set step 2
+            // Store session data for next step
             session()->put('r_mobile_number', $request->mobile_number);
             session()->put('r_email', $request->email);
             session()->put('verification', $verification);
@@ -101,10 +93,13 @@ class LoginRegisterController extends Controller
             session()->put('rstep', 2);
 
             return json_encode(['success' => true, 'rstep' => 1, 'verification' => $verification, 'message' => 'OTP sent']);
-        } elseif (session()->get('rstep') == 2) {
+        }
+        // Step 2: Verify OTPs and register user
+        elseif (session()->get('rstep') == 2) {
             $userSmsOtp = session()->get('r_sms_otp');
             $userEmailOtp = session()->get('r_email_otp');
 
+            // Validate OTPs
             if (session()->get('verification') == 'email-sms') {
                 if (empty($request->sms_otp) || $request->sms_otp != $userSmsOtp) {
                     return response()->json(['success' => false, 'rstep' => 2, 'message' => 'Invalid SMS OTP']);
@@ -115,22 +110,12 @@ class LoginRegisterController extends Controller
                 return response()->json(['success' => false, 'rstep' => 2, 'message' => 'Invalid Email OTP']);
             }
 
+            // Verify input matches session
             if (session()->get('r_mobile_number') != $request->mobile_number || session()->get('r_email') != $request->email) {
                 return response()->json(['success' => false, 'rstep' => 2, 'message' => 'Invalid Request']);
             }
 
-            // $user = User::create([
-            //     'first_name'    => $request->first_name,
-            //     'last_name'     => $request->last_name,
-            //     'name'          => $request->first_name . ' ' . $request->last_name,
-            //     'username'      => $request->username,
-            //     'email'         => $request->email,
-            //     'mobile_number' => $request->mobile_number,
-            //     'password'      => Hash::make($request->password),
-            //     'ip_address'    => request()->ip(),
-            // ]);
-            // $lastInsertId = $user->id;
-
+            // Create user
             $userData = session()->get('r_user_data');
             $user = User::create([
                 'first_name'    => $userData['first_name'],
@@ -143,7 +128,7 @@ class LoginRegisterController extends Controller
                 'ip_address'    => $request->ip(),
             ]);
 
-            //request credit
+            // Apply referral credits if any
             if (session()->get('referral')) {
                 DB::table('credits')->insert([
                     'user_id' => session()->get('referral'),
@@ -156,44 +141,21 @@ class LoginRegisterController extends Controller
                 ]);
             }
 
-            // $credentials = $request->only('email', 'password');
-            // Auth::attempt($credentials);
-            // $request->session()->regenerate();
-            // return json_encode(['success' => true, 'rstep' => 2]);
-
-            // Auth::login($user);
+            // Clear registration session
             session()->forget(['rstep', 'r_sms_otp', 'r_email_otp', 'r_user_data', 'r_mobile_number', 'r_email', 'verification']);
+
             return response()->json([
                 'success' => true,
                 'rstep' => 2,
                 'message' => 'Registration successful! Please log in.'
             ]);
-
-            // return response()->json(['success' => true, 'rstep' => 2, 'redirect' => route('login')]);
-            
         }
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'mobile_number' => $request->mobile_number,
-            'password' => Hash::make($request->password)
-        ]);
-
-        $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
-        $request->session()->regenerate();
-        return json_encode(['success' => true]);
-        return redirect()->route('home')
-            ->withSuccess('You have successfully registered & logged in!');
-
-        return json_encode(['success' => false, 'message' => 'Invalid registration step']);
+        // If step not matched, fallback
+        return response()->json(['success' => false, 'message' => 'Invalid registration step']);
     }
 
     /**
-     * Display a login form.
-     *
-     * @return \Illuminate\Http\Response
+     * Show login form.
      */
     public function login(Request $request)
     {
@@ -206,10 +168,7 @@ class LoginRegisterController extends Controller
     }
 
     /**
-     * Authenticate the user.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Authenticate user via email or username.
      */
     public function authenticate(Request $request)
     {
@@ -219,45 +178,32 @@ class LoginRegisterController extends Controller
             'email' => 'required',
             'password' => 'required'
         ]);
+
+        // Try email
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            
-
+            $user = Auth::user();
             if ($user && $user->is_active == 0) {
-                //return 'Your account is inactive!';
                 return $this->logout2();
             }
-            // redirect to index page
-
             return redirect()->route('/')->withSuccess('You have successfully logged in!');
-        } else {
-            $usernameCredentials = [
-                'username' => $credentials['email'],
-                'password' => $credentials['password']
-            ];
-
-            if (Auth::attempt($usernameCredentials)) {
-
-                $request->session()->regenerate();
-
-                if ($user && $user->is_active == 0) {
-                    //return 'Your account is inactive!';
-                    return $this->logout2();
-                }
-
-                return redirect()->route('/')->withSuccess('You have successfully logged in!');
-            }
         }
 
-        return back()->withErrors([
-            'email' => 'Your provided credentials do not match in our records.',
-        ])->onlyInput('email');
+        // Try username
+        $usernameCredentials = ['username' => $credentials['email'], 'password' => $credentials['password']];
+        if (Auth::attempt($usernameCredentials)) {
+            $request->session()->regenerate();
+            $user = Auth::user();
+            if ($user && $user->is_active == 0) {
+                return $this->logout2();
+            }
+            return redirect()->route('/')->withSuccess('You have successfully logged in!');
+        }
+        return back()->withErrors(['email' => 'Your provided credentials do not match our records.'])->onlyInput('email');
     }
 
     /**
-     * Display a dashboard to authenticated users.
-     *
-     * @return \Illuminate\Http\Response
+     * Display dashboard if authenticated.
      */
     public function dashboard()
     {
@@ -272,10 +218,7 @@ class LoginRegisterController extends Controller
     }
 
     /**
-     * Log out the user from application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Log out current user.
      */
     public function logout(Request $request)
     {
@@ -286,6 +229,9 @@ class LoginRegisterController extends Controller
             ->withSuccess('You have logged out successfully!');;
     }
 
+    /**
+     * Log out and show inactive message.
+     */
     public function logout2()
     {
         Auth::logout();
@@ -295,18 +241,29 @@ class LoginRegisterController extends Controller
             ->with('error', 'Your account is inactive!');
     }
 
+    /**
+     * Send OTP to the provided mobile number.
+     */
     public function sendOtp(Request $request)
     {
-        $phoneNumber = '7303418968';
-        $otp = mt_rand(100000, 999999); // Generate random OTP
+        // Validate mobile number
+        $request->validate([
+            'mobile_number' => 'required|string|min:10|max:15'
+        ]);
 
+        $phoneNumber = $request->input('mobile_number');
+
+        // Generate 6-digit OTP
+        $otp = rand(100000, 999999);
+
+        // Send OTP via Fast2SMS utility
         $fast2sms = new Fast2SMSUtility();
         $response = $fast2sms->sendOtp($phoneNumber, $otp);
 
-        return $response;
-
-        // Handle the response if needed
-
-        return response()->json(['message' => 'OTP sent successfully']);
+        // Return response
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP sent successfully.'
+        ]);
     }
 }
