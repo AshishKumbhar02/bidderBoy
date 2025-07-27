@@ -12,6 +12,7 @@ use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\BiddingController;
 use App\Http\Controllers\Payment\CcavenueController;
 
+use App\Http\Controllers\Payment\PayPalController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -96,6 +97,14 @@ Route::controller(CcavenueController::class)->group(function () {
 
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
+    Route::get('paypal/payment/{id}', [PayPalController::class, 'payment'])->name('paypal.payment');
+});
+
+Route::get('paypal/payment/success', [PayPalController::class, 'handleRedirect'])->name('paypal.payment.success'); // GET
+Route::post('paypal/payment/secure-success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.secure'); // POST
+Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment.cancel');
 /*------------------------------------------------------
 | Public Pages
 -------------------------------------------------------*/

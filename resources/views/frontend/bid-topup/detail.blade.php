@@ -130,7 +130,7 @@
                                 $('#couponForm').css('opacity', '0.5');
                                 $("#couponForm").after(
                                     '<div class="text-success">Coupon applied successfully!</div>'
-                                    );
+                                );
                                 Command: toastr["success"](response.message, "Success");
                             } else {
                                 Command: toastr["error"](response.message, "Alert");

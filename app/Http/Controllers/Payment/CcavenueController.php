@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Payment;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\BiddingController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\DB;
+use App\Models\Order; 
+use App\Http\Controllers\CheckoutController;
+
 use Session;
 use Redirect;
-use Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+
 
 class CcavenueController extends Controller
 {
@@ -217,3 +221,4 @@ class CcavenueController extends Controller
         return $binString;
     }
 }
+
