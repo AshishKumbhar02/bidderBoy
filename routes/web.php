@@ -97,14 +97,16 @@ Route::controller(CcavenueController::class)->group(function () {
 
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('paypal', [PayPalController::class, 'index'])->name('paypal');
-    Route::get('paypal/payment/{id}', [PayPalController::class, 'payment'])->name('paypal.payment');
-});
+// Route::get('/paypal/payment/success', function () {
+//     return 'This is the test success page.';
+// });
 
-Route::get('paypal/payment/success', [PayPalController::class, 'handleRedirect'])->name('paypal.payment.success'); // GET
-Route::post('paypal/payment/secure-success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.secure'); // POST
-Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment.cancel');
+// ✅ PUT THESE FIRST
+Route::get('/paypal', [PayPalController::class, 'index'])->name('paypal');
+Route::any('/paypal/payment/{id}', [PayPalController::class, 'payment'])->name('paypal.payment');
+Route::any('/paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
+Route::any('/paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment.cancel');
+
 /*------------------------------------------------------
 | Public Pages
 -------------------------------------------------------*/

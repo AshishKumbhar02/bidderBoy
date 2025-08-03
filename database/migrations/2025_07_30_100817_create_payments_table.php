@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('transaction_id')->unique();
             $table->unsignedBigInteger('product_id')->nullable();
-            $table->string('payer_name');
-            $table->string('payer_email');
-            $table->decimal('amount', 10, 2);
+            $table->string('user_id');
+            $table->string('user_email');
+            $table->string('amount');
             $table->string('currency');
             $table->string('status');
             $table->string('payment_method');
